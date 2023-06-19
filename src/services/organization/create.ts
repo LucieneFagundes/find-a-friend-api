@@ -1,3 +1,4 @@
+import { hash } from "bcryptjs";
 import { Organization } from "src/DTOs/organization-dto";
 import { OrganizationsRepository } from "src/repositories/organizations-repository";
 
@@ -34,10 +35,12 @@ export class CreateService {
 			throw new Error('Telephone already exists')
 		}
 
+		const password_hash = await hash(data.password, 6)
+
 		const organization = await this.organizationsRepository.save({
 			name: data.name,
 			email: data.email,
-			password: data.password,
+			password: password_hash,
 			telephone: data.telephone,
 			address: {
 				street: data.address.street,
