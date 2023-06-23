@@ -15,6 +15,7 @@ enum AGE {
 
 model Pet {
   id           String   @id @default(uuid())
+  isAvailable  Boolean  @default(true)
   name         String
   description  String
   age          AGE
@@ -37,22 +38,12 @@ model Organization {
   email         String @unique
   telephone     String @unique
   password_hash String
+  street        String
+  neighborhood  String
+  city          String
+  zip_code      String
 
-  pet       Pet[]
-  address   Local  @relation(fields: [addressId], references: [id])
-  addressId String
+  pet Pet[]
 
   @@map("organizations")
-}
-
-model Local {
-  id           String @id @default(uuid())
-  street       String
-  neighborhood String
-  city         String
-  zip_code     String
-
-  Organization Organization[]
-
-  @@map("locals")
 }
