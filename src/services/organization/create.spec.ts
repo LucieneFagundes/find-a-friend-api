@@ -16,13 +16,11 @@ describe("Create Organization Service", () => {
 			name: "example organization",
 			email: "example@example.com",
 			password: "123456",
-			telephone: "21-9-8877-8877",
-			address: {
-				zip_code: "23030-380",
-				street: "Rua A, 455",
-				neighborhood: "Jardim",
-				city: "Queimados",
-			},
+			telephone: "21-9-8877-8878",
+			address: "Rua A, 455",
+			zip_code: "23030-380",
+			neighborhood: "Jardim",
+			city: "Queimados",
 		});
 
 		expect(organization.name).toEqual(expect.any(String));
@@ -34,12 +32,10 @@ describe("Create Organization Service", () => {
 			email: "example@example.com",
 			password: "123456",
 			telephone: "21-9-8877-8878",
-			address: {
-				zip_code: "23030-380",
-				street: "Rua A, 455",
-				neighborhood: "Jardim",
-				city: "Queimados",
-			},
+			address: "Rua A, 455",
+			zip_code: "23030-380",
+			neighborhood: "Jardim",
+			city: "Queimados",
 		});
 
 		await expect(() =>
@@ -47,29 +43,25 @@ describe("Create Organization Service", () => {
 				name: "example organization",
 				email: "example@example.com",
 				password: "123456",
-				telephone: "21-9-8877-8877",
-				address: {
-					zip_code: "23030-380",
-					street: "Rua A, 455",
-					neighborhood: "Jardim",
-					city: "Queimados",
-				},
+				telephone: "21-9-8877-8878",
+				address: "Rua A, 455",
+				zip_code: "23030-380",
+				neighborhood: "Jardim",
+				city: "Queimados",
 			})
 		).rejects.toThrowError("Email already exists");
 	});
 
-  it("should not be able to create an organization with same telephone twice", async () => {
+	it("should not be able to create an organization with same telephone twice", async () => {
 		await sut.execute({
 			name: "example organization",
 			email: "example@example1.com",
 			password: "123456",
 			telephone: "21-9-8877-8877",
-			address: {
-				zip_code: "23030-380",
-				street: "Rua A, 455",
-				neighborhood: "Jardim",
-				city: "Queimados",
-			},
+			address: "Rua A, 455",
+			zip_code: "23030-380",
+			neighborhood: "Jardim",
+			city: "Queimados",
 		});
 
 		await expect(() =>
@@ -78,12 +70,10 @@ describe("Create Organization Service", () => {
 				email: "example@example2.com",
 				password: "123456",
 				telephone: "21-9-8877-8877",
-				address: {
-					zip_code: "23030-380",
-					street: "Rua A, 455",
-					neighborhood: "Jardim",
-					city: "Queimados",
-				},
+				address: "Rua A, 455",
+				zip_code: "23030-380",
+				neighborhood: "Jardim",
+				city: "Queimados",
 			})
 		).rejects.toThrowError("Telephone already exists");
 	});

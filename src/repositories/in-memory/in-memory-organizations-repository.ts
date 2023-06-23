@@ -20,7 +20,7 @@ export class InMemoryOrganizationsRepository
 
 		if (!organization) return null;
 
-		return organization
+		return organization;
 	}
 
 	async save(data: Organization) {
@@ -30,12 +30,10 @@ export class InMemoryOrganizationsRepository
 			email: data.email,
 			password: data.password,
 			telephone: data.telephone,
-			address: {
-				street: data.address.street,
-				neighborhood: data.address.neighborhood,
-				city: data.address.city,
-				zip_code: data.address.zip_code,
-			},
+			address: data.address,
+			neighborhood: data.neighborhood,
+			city: data.city,
+			zip_code: data.zip_code,
 		};
 
 		this.items.push(organization);
