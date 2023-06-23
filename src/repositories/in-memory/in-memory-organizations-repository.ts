@@ -1,11 +1,15 @@
+import { randomUUID } from "crypto";
 import { Organization } from "src/DTOs/organization-dto";
 import { OrganizationsRepository } from "../organizations-repository";
-import { randomUUID } from "crypto";
 
 export class InMemoryOrganizationsRepository
 	implements OrganizationsRepository
 {
 	public items: Organization[] = [];
+
+	async findByCity(city: string) {
+		return this.items.filter((item) => item.city === city);
+	}
 
 	async findByEmail(email: string) {
 		const organization = this.items.find((org) => org.email === email);

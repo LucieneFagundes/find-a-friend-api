@@ -1,12 +1,19 @@
+import { randomUUID } from "crypto";
+import { Organization } from "src/DTOs/organization-dto";
 import { Pet } from "src/DTOs/pet-dto";
 import { PetsRepository } from "../pets-repository";
-import { randomUUID } from "crypto";
 
 export class InMemoryPetsRepository implements PetsRepository {
 	public items: Pet[] = [];
 
-	async findAll() {
-		return this.items;
+	async findAll(orgs: Organization[]) {
+		const pets: Pet[] = [];
+		for (let org of orgs) {
+			const orgPets = this.items.filter((item) => item.orgId === org.id);
+			pets.push(...orgPets);
+		}
+
+		return pets;
 	}
 
 	async findOne(id: string) {
@@ -29,8 +36,8 @@ export class InMemoryPetsRepository implements PetsRepository {
 			orgId: data.orgId,
 		};
 
-    this.items.push(pet);
+		this.items.push(pet);
 
-    return pet;
+		return pet;
 	}
 }
