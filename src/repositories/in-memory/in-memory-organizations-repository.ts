@@ -1,5 +1,5 @@
-import { randomUUID } from "crypto";
-import { Organization } from "src/DTOs/organization-dto";
+import { Organization, Prisma } from "@prisma/client";
+import { randomUUID } from "node:crypto";
 import { OrganizationsRepository } from "../organizations-repository";
 
 export class InMemoryOrganizationsRepository
@@ -27,14 +27,14 @@ export class InMemoryOrganizationsRepository
 		return organization;
 	}
 
-	async save(data: Organization) {
+	async create(data: Prisma.OrganizationCreateInput) {
 		const organization = {
 			id: randomUUID(),
 			name: data.name,
 			email: data.email,
-			password: data.password,
+			password_hash: data.password_hash,
 			telephone: data.telephone,
-			address: data.address,
+			street: data.street,
 			neighborhood: data.neighborhood,
 			city: data.city,
 			zip_code: data.zip_code,

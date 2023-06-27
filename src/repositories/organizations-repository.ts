@@ -1,8 +1,8 @@
-import { Organization } from "src/DTOs/organization-dto";
+import { Organization, Prisma } from "@prisma/client";
 
 export interface OrganizationsRepository {
 	findByCity(city: string): Promise<Organization[]>;
 	findByEmail(email: string): Promise<Organization | null>;
 	findByTelephone(telephone: string): Promise<Organization | null>;
-	save(data: Organization): Promise<Organization>;
+	create(data: Prisma.OrganizationCreateInput): Promise<Organization>;
 }

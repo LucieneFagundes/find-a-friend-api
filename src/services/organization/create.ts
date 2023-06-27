@@ -1,5 +1,5 @@
+import { Organization } from "@prisma/client";
 import { hash } from "bcryptjs";
-import { Organization } from "src/DTOs/organization-dto";
 import { OrganizationsRepository } from "src/repositories/organizations-repository";
 
 interface ICreateRequest {
@@ -7,10 +7,10 @@ interface ICreateRequest {
 	email: string;
 	password: string;
 	telephone: string;
-	address: String;
-	neighborhood: String;
-	city: String;
-	zip_code: String;
+	street: string;
+	neighborhood: string;
+	city: string;
+	zip_code: string;
 }
 
 interface ICreateResponse {
@@ -20,9 +20,18 @@ interface ICreateResponse {
 export class CreateService {
 	constructor(private organizationsRepository: OrganizationsRepository) {}
 
-	async execute(data: ICreateRequest): Promise<ICreateResponse> {
+	async execute({
+		name,
+		email,
+		password,
+		telephone,
+		street,
+		neighborhood,
+		city,
+		zip_code,
+	}: ICreateRequest): Promise<ICreateResponse> {
 		const emailAlreadyExists = await this.organizationsRepository.findByEmail(
-			data.email
+			email
 		);
 
 		if (emailAlreadyExists) {
@@ -30,22 +39,22 @@ export class CreateService {
 		}
 
 		const telephoneAlreadyExists =
-			await this.organizationsRepository.findByTelephone(data.telephone);
+			await this.organizationsRepository.findByTelephone(telephone);
 		if (telephoneAlreadyExists) {
 			throw new Error("Telephone already exists");
 		}
 
-		const password_hash = await hash(data.password, 6);
+		const password_hash = await hash(password, 6);
 
-		const organization = await this.organizationsRepository.save({
-			name: data.name,
-			email: data.email,
-			password: password_hash,
-			telephone: data.telephone,
-			address: data.address,
-			neighborhood: data.neighborhood,
-			city: data.city,
-			zip_code: data.zip_code,
+		const organization = await this.organizationsRepository.create({
+			name,
+			email,
+			password_hash,
+			telephone,
+			street,
+			neighborhood,
+			city,
+			zip_code,
 		});
 
 		return { organization };
