@@ -26,8 +26,8 @@ model Pet {
   images       String[]
   requirements String[]
 
-  ong   Organization @relation(fields: [ongId], references: [id])
-  ongId String
+  org   Organization @relation(fields: [orgId], references: [id])
+  orgId String
 
   @@map("pets")
 }
