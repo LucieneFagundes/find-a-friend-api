@@ -15,12 +15,12 @@ describe("Search by City", () => {
 	});
 
 	it("should be able to search pets by city", async () => {
-		const organization = await organizationsRepository.save({
+		const organization = await organizationsRepository.create({
 			name: "example organization",
 			email: "example@example.com",
-			password: "123456",
+			password_hash: "123456",
 			telephone: "21-9-8877-8878",
-			address: "Rua A, 455",
+			street: "Rua A, 455",
 			zip_code: "23030-380",
 			neighborhood: "Jardim",
 			city: "Queimados",
@@ -29,23 +29,29 @@ describe("Search by City", () => {
 		await petsRepository.save({
 			name: "Cid",
 			description: "Doa-se um amigãozão dócil",
-			age: "adult",
+			age: "ADULT",
 			energy: "3",
 			independency: "2",
 			size: "big",
+			images: [],
 			requirements: ["Quanto está frio ele fica com a imunidade baixa"],
+			id: "",
+			isAvailable: true,
 			orgId: organization.id,
 		});
 
 		await petsRepository.save({
 			name: "Pitchuca",
 			description: "Doa-se um amigãozão dócil",
-			age: "adult",
+			age: "ADULT",
 			energy: "3",
 			independency: "2",
 			size: "big",
 			requirements: ["Quanto está frio ele fica com a imunidade baixa"],
 			orgId: organization.id,
+			id: "",
+			isAvailable: false,
+			images: [],
 		});
 
 		const search = await sut.execute("Queimados");
@@ -58,12 +64,12 @@ describe("Search by City", () => {
 	});
 
 	it("should not be able to search for a pet in the chosen city ", async () => {
-		const organization = await organizationsRepository.save({
+		const organization = await organizationsRepository.create({
 			name: "example organization",
 			email: "example@example.com",
-			password: "123456",
+			password_hash: "123456",
 			telephone: "21-9-8877-8878",
-			address: "Rua A, 455",
+			street: "Rua A, 455",
 			zip_code: "23030-380",
 			neighborhood: "Jardim",
 			city: "Queimados",
@@ -72,12 +78,15 @@ describe("Search by City", () => {
 		await petsRepository.save({
 			name: "Cid",
 			description: "Doa-se um amigãozão dócil",
-			age: "adult",
+			age: "ADULT",
 			energy: "3",
 			independency: "2",
 			size: "big",
 			requirements: ["Quanto está frio ele fica com a imunidade baixa"],
 			orgId: organization.id,
+			id: "",
+			isAvailable: false,
+			images: [],
 		});
 
 		await expect(() => sut.execute("Nova Iguaçu")).rejects.toThrowError(

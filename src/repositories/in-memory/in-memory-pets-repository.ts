@@ -21,10 +21,10 @@ export class InMemoryPetsRepository implements PetsRepository {
 		return pet;
 	}
 
-	async save(data: Pet) {
+	async save(data: Pet): Promise<Pet> {
 		const pet = {
-			id: randomUUID(),
-			isAvailable: true,
+			id: data.id,
+			isAvailable: data.isAvailable,
 			name: data.name,
 			description: data.description,
 			age: data.age,
@@ -38,6 +38,6 @@ export class InMemoryPetsRepository implements PetsRepository {
 
 		this.items.push(pet);
 
-		return pet;
+		return this.items[0];
 	}
 }

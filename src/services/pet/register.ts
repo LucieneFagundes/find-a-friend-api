@@ -1,10 +1,11 @@
-import { Pet } from "src/DTOs/pet-dto";
+import { Pet } from "@prisma/client";
+import { randomUUID } from "node:crypto";
 import { PetsRepository } from "src/repositories/pets-repository";
 
 interface IRegisterRequest {
 	name: string;
 	description: string;
-	age: "puppy" | "adult" | "elderly";
+	age: string;
 	size: string;
 	energy: string;
 	independency: string;
@@ -22,14 +23,16 @@ export class RegisterService {
 
 	async execute(data: IRegisterRequest): Promise<IRegisterResponse> {
 		const pet = await this.petsRepository.save({
+			id: randomUUID(),
+			isAvailable: true,
 			name: data.name,
 			description: data.description,
 			age: data.age,
 			size: data.size,
 			energy: data.energy,
 			independency: data.independency,
-			images: data.images,
-			requirements: data.requirements,
+			images: data.images ?? [],
+			requirements: data.requirements ?? [],
 			orgId: data.orgId,
 		});
 
