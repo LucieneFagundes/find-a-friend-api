@@ -1,21 +1,32 @@
 import { OrganizationsRepository } from "src/repositories/organizations-repository";
 import { PetsRepository } from "src/repositories/pets-repository";
 
+interface PetRequest {
+	age?: string;
+	energy?: string;
+	independency?: string;
+	size?: string;
+}
 export class SearchByCityService {
 	constructor(
 		private organizationsRepository: OrganizationsRepository,
 		private petsRepository: PetsRepository
 	) {}
 
-	async execute(city: string) {
-		const orgByCities = this.organizationsRepository.findByCity(city);
+	async execute(city: string, { age, energy, independency, size }: PetRequest) {
+		const orgByCities = await this.organizationsRepository.findByCity(city);
 
-		if ((await orgByCities).length <=0) {
+		if ((orgByCities).length <= 0) {
 			throw new Error(`No pets found in this city`);
 		}
 
-		const pets = await this.petsRepository.findAll(await orgByCities);
-
+		const pets = await this.petsRepository.findAll(
+			orgByCities,
+			age,
+			energy,
+			independency,
+			size
+		);
 
 		return pets;
 	}

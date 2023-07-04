@@ -1,14 +1,30 @@
-import { Organization, Pet, Prisma } from "@prisma/client";
-import { randomUUID } from "node:crypto";
+import { Organization, Pet } from "@prisma/client";
 import { PetsRepository } from "../pets-repository";
-
 export class InMemoryPetsRepository implements PetsRepository {
 	public items: Pet[] = [];
 
-	async findAll(orgs: Organization[]) {
+	async findAll(
+		orgs: Organization[],
+		age?: string,
+		energy?: string,
+		independency?: string,
+		size?: string
+	) {
 		const pets: Pet[] = [];
+		console.log(orgs);
+
 		for (let org of orgs) {
-			const orgPets = this.items.filter((item) => item.orgId === org.id);
+			const orgPets = this.items.filter((item) => {
+				return (
+					item.orgId === org.id &&
+					(age === undefined || item.age === age) &&
+					(energy === undefined || item.energy === energy) &&
+					(independency === undefined || item.independency === independency) &&
+					(size === undefined || item.size === size)
+				);
+			});
+			console.log(orgPets);
+
 			pets.push(...orgPets);
 		}
 

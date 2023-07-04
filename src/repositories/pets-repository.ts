@@ -1,7 +1,13 @@
-import { Organization, Pet, Prisma } from "@prisma/client";
+import { Organization, Pet } from "@prisma/client";
 
 export interface PetsRepository {
-	findAll(orgs: Organization[]): Promise<Pet[]>;
+	findAll(
+		orgs: Organization[],
+		age?: string,
+		energy?: string,
+		independency?: string,
+		size?: string
+	): Promise<Pet[]>;
 	findOne(id: string): Promise<Pet | null>;
 	save(data: Pet): Promise<Pet>;
 }
