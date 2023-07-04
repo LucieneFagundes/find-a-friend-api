@@ -1,5 +1,4 @@
-import { Organization } from "src/DTOs/organization-dto";
-import { Pet } from "src/DTOs/pet-dto";
+import { Organization, Pet, Prisma } from "@prisma/client";
 
 export interface PetsRepository {
 	findAll(orgs: Organization[]): Promise<Pet[]>;

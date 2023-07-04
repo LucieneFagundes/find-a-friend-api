@@ -7,18 +7,12 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum AGE {
-  PUPPY
-  ADULT
-  ELDERLY
-}
-
 model Pet {
   id           String   @id @default(uuid())
   isAvailable  Boolean  @default(true)
   name         String
   description  String
-  age          AGE
+  age          String
   size         String
   energy       String
   independency String

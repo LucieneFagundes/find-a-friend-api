@@ -1,6 +1,5 @@
-import { randomUUID } from "crypto";
-import { Organization } from "src/DTOs/organization-dto";
-import { Pet } from "src/DTOs/pet-dto";
+import { Organization, Pet, Prisma } from "@prisma/client";
+import { randomUUID } from "node:crypto";
 import { PetsRepository } from "../pets-repository";
 
 export class InMemoryPetsRepository implements PetsRepository {
@@ -25,6 +24,7 @@ export class InMemoryPetsRepository implements PetsRepository {
 	async save(data: Pet) {
 		const pet = {
 			id: randomUUID(),
+			isAvailable: true,
 			name: data.name,
 			description: data.description,
 			age: data.age,
