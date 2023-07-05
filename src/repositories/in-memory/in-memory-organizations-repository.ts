@@ -8,7 +8,9 @@ export class InMemoryOrganizationsRepository
 	public items: Organization[] = [];
 
 	async findByCity(city: string) {
-		return this.items.filter((item) => item.city === city);
+		return this.items.filter(
+			(item) => item.city.toLowerCase() === city.toLowerCase()
+		);
 	}
 
 	async findByEmail(email: string) {

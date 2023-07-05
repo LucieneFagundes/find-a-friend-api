@@ -1,8 +1,7 @@
+import { InMemoryPetsRepository } from "src/repositories/in-memory/in-memory-pets-repository";
 import { PetsRepository } from "src/repositories/pets-repository";
 import { beforeEach, describe, expect, it } from "vitest";
 import { GetPetService } from "./get-pet";
-import { InMemoryPetsRepository } from "src/repositories/in-memory/in-memory-pets-repository";
-import { randomUUID } from "node:crypto";
 
 let petsRepository: PetsRepository;
 let sut: GetPetService;
@@ -27,8 +26,6 @@ describe("Get Pet Service", () => {
 			images: [],
 			requirements: ["Precisa de atenção com muitos obstáculos, pois é parcialmente cego"],
 		});
-
-		console.log(createdPet)
 
 		const { pet } = await sut.execute({ id: createdPet.id });
 

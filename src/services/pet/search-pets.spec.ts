@@ -55,7 +55,7 @@ describe("Search by City", () => {
 	});
 
 	it("should be able to search pets by city", async () => {
-		const search = await sut.execute("Queimados", {});
+		const search = await sut.execute({ city: "queimados" });
 
 		expect(search).toHaveLength(2);
 		expect(search).toEqual([
@@ -64,15 +64,21 @@ describe("Search by City", () => {
 		]);
 	});
 
-	it("should not be able to search for a pet in the chosen city ", async () => {
-		await expect(() => sut.execute("Nova Iguaçu", {})).rejects.toThrowError(
-			"No pets found in this city"
-		);
-	});
-
 	it("should be able to filter the search by pet characteristics", async () => {
-		const result = await sut.execute("Queimados", { age: "puppy" });
+		const result = await sut.execute({ city: "Queimados", age: "puppy" });
 
 		expect(result).toHaveLength(2);
+	});
+
+	it("should not be able to search for a pet in the chosen city ", async () => {
+		await expect(() =>
+			sut.execute({ city: "nova iguaçu" })
+		).rejects.toThrowError("No pets found in this city");
+	});
+
+	it("should not be able to search for pets without providing a city", async () => {
+		await expect(() => sut.execute({ city: "".trim() })).rejects.toThrowError(
+			"Please enter a city name to search for pets"
+		);
 	});
 });
