@@ -7,7 +7,7 @@ interface PetRequest {
 	independency?: string;
 	size?: string;
 }
-export class SearchByCityService {
+export class SearchPetsService {
 	constructor(
 		private organizationsRepository: OrganizationsRepository,
 		private petsRepository: PetsRepository

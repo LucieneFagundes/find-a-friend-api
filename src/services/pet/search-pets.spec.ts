@@ -1,18 +1,18 @@
+import { randomUUID } from "node:crypto";
 import { InMemoryOrganizationsRepository } from "src/repositories/in-memory/in-memory-organizations-repository";
 import { InMemoryPetsRepository } from "src/repositories/in-memory/in-memory-pets-repository";
 import { beforeEach, describe, expect, it } from "vitest";
-import { SearchByCityService } from "./search-by-city";
-import { randomUUID } from "node:crypto";
+import { SearchPetsService } from "./search-pets";
 
 let petsRepository: InMemoryPetsRepository;
 let organizationsRepository: InMemoryOrganizationsRepository;
-let sut: SearchByCityService;
+let sut: SearchPetsService;
 
 describe("Search by City", () => {
 	beforeEach(async () => {
 		petsRepository = new InMemoryPetsRepository();
 		organizationsRepository = new InMemoryOrganizationsRepository();
-		sut = new SearchByCityService(organizationsRepository, petsRepository);
+		sut = new SearchPetsService(organizationsRepository, petsRepository);
 
 		const organizationTest = await organizationsRepository.create({
 			name: "example organization",
