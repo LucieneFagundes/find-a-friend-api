@@ -3,8 +3,9 @@ import { PetsRepository } from "../pets-repository";
 export class InMemoryPetsRepository implements PetsRepository {
 	public items: Pet[] = [];
 
-	async findAll(
+	async searchMany(
 		orgs: Organization[],
+		page: number,
 		age?: string,
 		energy?: string,
 		independency?: string,
@@ -13,15 +14,18 @@ export class InMemoryPetsRepository implements PetsRepository {
 		const pets: Pet[] = [];
 
 		for (let org of orgs) {
-			const orgPets = this.items.filter((item) => {
-				return (
-					item.orgId === org.id &&
-					(age === undefined || item.age === age) &&
-					(energy === undefined || item.energy === energy) &&
-					(independency === undefined || item.independency === independency) &&
-					(size === undefined || item.size === size)
-				);
-			});
+			const orgPets = this.items
+				.filter((item) => {
+					return (
+						item.orgId === org.id &&
+						(age === undefined || item.age === age) &&
+						(energy === undefined || item.energy === energy) &&
+						(independency === undefined ||
+							item.independency === independency) &&
+						(size === undefined || item.size === size)
+					);
+				})
+				.slice((page - 1) * 10, page * 10);
 
 			pets.push(...orgPets);
 		}

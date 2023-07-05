@@ -1,8 +1,9 @@
 import { Organization, Pet } from "@prisma/client";
 
 export interface PetsRepository {
-	findAll(
+	searchMany(
 		orgs: Organization[],
+		page: number,
 		age?: string,
 		energy?: string,
 		independency?: string,
