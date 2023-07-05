@@ -8,7 +8,7 @@ let petsRepository: InMemoryPetsRepository;
 let organizationsRepository: InMemoryOrganizationsRepository;
 let sut: SearchPetsService;
 
-describe("Search by City", () => {
+describe("Search Pets", () => {
 	beforeEach(async () => {
 		petsRepository = new InMemoryPetsRepository();
 		organizationsRepository = new InMemoryOrganizationsRepository();

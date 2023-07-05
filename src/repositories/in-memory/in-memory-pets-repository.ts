@@ -11,7 +11,6 @@ export class InMemoryPetsRepository implements PetsRepository {
 		size?: string
 	) {
 		const pets: Pet[] = [];
-		console.log(orgs);
 
 		for (let org of orgs) {
 			const orgPets = this.items.filter((item) => {
@@ -23,7 +22,6 @@ export class InMemoryPetsRepository implements PetsRepository {
 					(size === undefined || item.size === size)
 				);
 			});
-			console.log(orgPets);
 
 			pets.push(...orgPets);
 		}
