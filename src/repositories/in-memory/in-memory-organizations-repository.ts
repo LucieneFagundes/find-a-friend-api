@@ -7,6 +7,16 @@ export class InMemoryOrganizationsRepository
 {
 	public items: Organization[] = [];
 
+	async findById(id: string): Promise<Organization | null> {
+		const org = this.items.find((item) => item.id === id);
+
+		if (!org) {
+			return null;
+		}
+
+		return org;
+	}
+
 	async findByCity(city: string) {
 		return this.items.filter(
 			(item) => item.city.toLowerCase() === city.toLowerCase()
