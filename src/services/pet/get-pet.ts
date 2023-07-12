@@ -1,6 +1,7 @@
 import { Organization, Pet } from "@prisma/client";
 import { OrganizationsRepository } from "src/repositories/organizations-repository";
 import { PetsRepository } from "src/repositories/pets-repository";
+import { ResourceNotFoundError } from "../errors/resource-not-found-error";
 
 interface IGetPetRequest {
 	id: string;
@@ -21,13 +22,14 @@ export class GetPetService {
 		const pet = await this.petsRepository.findOne(id);
 
 		if (!pet) {
-			throw new Error("Sorry, pet not found!");
+			throw new ResourceNotFoundError();
 		}
 
+		// TODO: Is this really necessary?
 		const organization = await this.organizationsRepository.findById(pet.orgId);
 
 		if (!organization) {
-			throw new Error("Sorry, something is wrong!");
+			throw new ResourceNotFoundError();
 		}
 
 		const { name, telephone, neighborhood, city, street, zip_code } =

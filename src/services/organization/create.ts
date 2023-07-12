@@ -1,6 +1,7 @@
 import { Organization } from "@prisma/client";
 import { hash } from "bcryptjs";
 import { OrganizationsRepository } from "src/repositories/organizations-repository";
+import { CredentialAlreadyExistsError } from "../errors/credential-already-exists.error";
 
 interface ICreateRequest {
 	name: string;
@@ -35,13 +36,13 @@ export class CreateService {
 		);
 
 		if (emailAlreadyExists) {
-			throw new Error("Email already exists");
+			throw new CredentialAlreadyExistsError("email");
 		}
 
 		const telephoneAlreadyExists =
 			await this.organizationsRepository.findByTelephone(telephone);
 		if (telephoneAlreadyExists) {
-			throw new Error("Telephone already exists");
+			throw new CredentialAlreadyExistsError("telephone");
 		}
 
 		const password_hash = await hash(password, 6);

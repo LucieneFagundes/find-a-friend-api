@@ -3,6 +3,8 @@ import { InMemoryOrganizationsRepository } from "src/repositories/in-memory/in-m
 import { InMemoryPetsRepository } from "src/repositories/in-memory/in-memory-pets-repository";
 import { beforeEach, describe, expect, it } from "vitest";
 import { SearchPetsService } from "./search-pets";
+import { InvalidCredentialsError } from "../errors/invalid-credentials-error";
+import { ResourceNotFoundError } from "../errors/resource-not-found-error";
 
 let petsRepository: InMemoryPetsRepository;
 let organizationsRepository: InMemoryOrganizationsRepository;
@@ -77,12 +79,12 @@ describe("Search Pets", () => {
 	it("should not be able to search for a pet in the chosen city ", async () => {
 		await expect(() =>
 			sut.execute({ city: "nova iguaçu", page: 1 })
-		).rejects.toThrowError("No pets found in this city");
+		).rejects.toBeInstanceOf(ResourceNotFoundError);
 	});
 
 	it("should not be able to search for pets without providing a city", async () => {
 		await expect(() =>
 			sut.execute({ city: "".trim(), page: 1 })
-		).rejects.toThrowError("Please enter a city name to search for pets");
+		).rejects.toBeInstanceOf(InvalidCredentialsError);
 	});
 });

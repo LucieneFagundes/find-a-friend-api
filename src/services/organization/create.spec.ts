@@ -1,6 +1,7 @@
 import { InMemoryOrganizationsRepository } from "src/repositories/in-memory/in-memory-organizations-repository";
 import { beforeEach, describe, expect, it } from "vitest";
 import { CreateService } from "./create";
+import { CredentialAlreadyExistsError } from "../errors/credential-already-exists.error";
 
 let organizationRepository: InMemoryOrganizationsRepository;
 let sut: CreateService;
@@ -49,7 +50,7 @@ describe("Create Organization Service", () => {
 				neighborhood: "Jardim",
 				city: "Queimados",
 			})
-		).rejects.toThrowError("Email already exists");
+		).rejects.toBeInstanceOf(CredentialAlreadyExistsError);
 	});
 
 	it("should not be able to create an organization with same telephone twice", async () => {
@@ -75,6 +76,6 @@ describe("Create Organization Service", () => {
 				neighborhood: "Jardim",
 				city: "Queimados",
 			})
-		).rejects.toThrowError("Telephone already exists");
+		).rejects.toBeInstanceOf(CredentialAlreadyExistsError);
 	});
 });

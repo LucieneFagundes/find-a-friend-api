@@ -4,6 +4,7 @@ import { beforeEach, describe, expect, it } from "vitest";
 import { GetPetService } from "./get-pet";
 import { OrganizationsRepository } from "src/repositories/organizations-repository";
 import { InMemoryOrganizationsRepository } from "src/repositories/in-memory/in-memory-organizations-repository";
+import { ResourceNotFoundError } from "../errors/resource-not-found-error";
 
 let petsRepository: PetsRepository;
 let organizationsRepository: OrganizationsRepository;
@@ -47,5 +48,11 @@ describe("Get Pet Service", () => {
 		const { pet } = await sut.execute({ id: createdPet.id });
 
 		expect(pet.id).toEqual(expect.any(String));
+	});
+
+	it("should not be able to get a pet with a inexistent id", async () => {
+		expect(() => sut.execute({ id: "inexistent" })).rejects.toBeInstanceOf(
+			ResourceNotFoundError
+		);
 	});
 });

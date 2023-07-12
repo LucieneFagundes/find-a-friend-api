@@ -2,6 +2,7 @@ import { hash } from "bcryptjs";
 import { InMemoryOrganizationsRepository } from "src/repositories/in-memory/in-memory-organizations-repository";
 import { beforeEach, describe, expect, it } from "vitest";
 import { AuthenticateService } from "./authenticate";
+import { InvalidCredentialsError } from "../errors/invalid-credentials-error";
 
 let organizationRepository: InMemoryOrganizationsRepository;
 let sut: AuthenticateService;
@@ -38,7 +39,7 @@ describe("Authenticate Service", () => {
 				email: "lar.pet@gmail.com",
 				password: "123456",
 			})
-		).rejects.toThrowError("Email or password incorrect");
+		).rejects.toBeInstanceOf(InvalidCredentialsError);
 	});
 
 	it("should be able to authenticate with wrong password", async () => {
@@ -58,6 +59,6 @@ describe("Authenticate Service", () => {
 				email: "lar.pet@gmail.com",
 				password: "wrong-password",
 			})
-		).rejects.toThrowError("Email or password incorrect");
+		).rejects.toBeInstanceOf(InvalidCredentialsError);
 	});
 });

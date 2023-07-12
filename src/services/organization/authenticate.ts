@@ -1,6 +1,7 @@
 import { Organization } from "@prisma/client";
 import { compare } from "bcryptjs";
 import { OrganizationsRepository } from "src/repositories/organizations-repository";
+import { InvalidCredentialsError } from "../errors/invalid-credentials-error";
 
 interface IAuthenticateRequest {
 	email: string;
@@ -21,13 +22,13 @@ export class AuthenticateService {
 		const org = await this.organizationRepository.findByEmail(email);
 
 		if (!org) {
-			throw new Error(`Email or password incorrect`);
+			throw new InvalidCredentialsError();
 		}
 
 		const doesPasswordMatches = await compare(password, org.password_hash);
 
 		if (!doesPasswordMatches) {
-			throw new Error(`Email or password incorrect`);
+			throw new InvalidCredentialsError();
 		}
 
 		return { org };
