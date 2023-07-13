@@ -26,7 +26,9 @@ export class SearchPetsService {
 		size,
 	}: ISearchRequest) {
 		if (!city || city == "") {
-			throw new InvalidCredentialsError("Please enter a city name to search for pets");
+			throw new InvalidCredentialsError(
+				"Please enter a city name to search for pets"
+			);
 		}
 
 		const orgByCities = await this.organizationsRepository.findByCity(city);
@@ -44,6 +46,6 @@ export class SearchPetsService {
 			size
 		);
 
-		return pets;
+		return { pets };
 	}
 }
