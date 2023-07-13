@@ -19,7 +19,6 @@ describe("Register Pet Service", () => {
 			energy: "3",
 			independency: "2",
 			size: "big",
-			requirements: ["Quanto está frio ele fica com a imunidade baixa"],
 			orgId: "org-1",
 		});
 

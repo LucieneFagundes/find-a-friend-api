@@ -57,23 +57,26 @@ describe("Search Pets", () => {
 	});
 
 	it("should be able to search pets by city", async () => {
-		const search = await sut.execute({ city: "queimados", page: 1 });
+		const { pets } = await sut.execute({ city: "queimados", page: 1 });
 
-		expect(search).toHaveLength(2);
-		expect(search).toEqual([
+		expect(pets).toHaveLength(2);
+		expect(pets).toEqual([
 			expect.objectContaining({ name: "Cid" }),
 			expect.objectContaining({ name: "Pitchuca" }),
 		]);
 	});
 
 	it("should be able to filter the search by pet characteristics", async () => {
-		const result = await sut.execute({
+		const { pets } = await sut.execute({
 			city: "Queimados",
 			page: 1,
 			age: "puppy",
+			energy: "3",
+			independency: "medium",
+			size: "big",
 		});
 
-		expect(result).toHaveLength(2);
+		expect(pets).toHaveLength(1);
 	});
 
 	it("should not be able to search for a pet in the chosen city ", async () => {

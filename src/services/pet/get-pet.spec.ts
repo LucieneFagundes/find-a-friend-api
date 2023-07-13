@@ -55,4 +55,26 @@ describe("Get Pet Service", () => {
 			ResourceNotFoundError
 		);
 	});
+
+	it("should not be able to get a pet with an invalid organization", async () => {
+		const createdPet = await petsRepository.save({
+			id: "pet-01",
+			name: "Oreo",
+			description: "a black blind cat",
+			age: "ADULT",
+			energy: "medium",
+			independency: "high",
+			size: "normal",
+			orgId: "inexistent",
+			isAvailable: true,
+			images: [],
+			requirements: [
+				"Precisa de atenção com muitos obstáculos, pois é parcialmente cego",
+			],
+		});
+
+		expect(() => sut.execute({ id: createdPet.id })).rejects.toBeInstanceOf(
+			ResourceNotFoundError
+		);
+	});
 });
