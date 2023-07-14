@@ -1,4 +1,4 @@
-import { Organization, Pet } from "@prisma/client";
+import { Organization, Pet, Prisma } from "@prisma/client";
 import { PetsRepository } from "../pets-repository";
 import { prisma } from "src/lib/prisma";
 
@@ -30,13 +30,13 @@ export class PrismaPetsRepository implements PetsRepository {
 		}
 		return pets;
 	}
-  
+
 	async findOne(id: string) {
 		const pet = await prisma.pet.findUnique({ where: { id } });
 
 		return pet;
 	}
-	async save(data: Pet) {
+	async save(data: Prisma.PetUncheckedCreateInput) {
 		const pet = await prisma.pet.create({ data });
 
 		return pet;

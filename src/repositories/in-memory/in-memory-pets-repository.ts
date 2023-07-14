@@ -1,5 +1,6 @@
-import { Organization, Pet } from "@prisma/client";
+import { Organization, Pet, Prisma } from "@prisma/client";
 import { PetsRepository } from "../pets-repository";
+import { randomUUID } from "node:crypto";
 export class InMemoryPetsRepository implements PetsRepository {
 	public items: Pet[] = [];
 
@@ -39,18 +40,18 @@ export class InMemoryPetsRepository implements PetsRepository {
 		return pet;
 	}
 
-	async save(data: Pet): Promise<Pet> {
+	async save(data: Prisma.PetUncheckedCreateInput): Promise<Pet> {
 		const pet = {
-			id: data.id,
-			isAvailable: data.isAvailable,
+			id: randomUUID(),
+			isAvailable: true,
 			name: data.name,
 			description: data.description,
 			age: data.age,
 			size: data.size,
 			energy: data.energy,
 			independency: data.independency,
-			images: data.images,
-			requirements: data.requirements,
+			images: data.images as Array<string>,
+			requirements: data.requirements as Array<string>,
 			orgId: data.orgId,
 		};
 
