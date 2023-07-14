@@ -4,7 +4,7 @@ import { prisma } from "src/lib/prisma";
 import request from "supertest";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 
-describe.only("Search pets - E2E", () => {
+describe("Search pets - E2E", () => {
 	beforeAll(async () => {
 		await app.ready();
 	});
@@ -46,7 +46,7 @@ describe.only("Search pets - E2E", () => {
 				energy: "5",
 				independency: "high",
 				size: "small",
-				images: ['image.jpg'],
+				images: ["image.jpg"],
 				requirements: ["Quanto está frio ele fica com a imunidade baixa"],
 				orgId: organization.id,
 			},
@@ -60,6 +60,6 @@ describe.only("Search pets - E2E", () => {
 			.send();
 
 		expect(response.statusCode).toEqual(200);
-    expect(response.body.pets).toHaveLength(2)
+		expect(response.body.pets).toHaveLength(2);
 	});
 });
