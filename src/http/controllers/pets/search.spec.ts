@@ -35,8 +35,6 @@ describe.only("Search pets - E2E", () => {
 				energy: "5",
 				independency: "high",
 				size: "small",
-				images: [],
-				requirements: ["Quanto está frio ele fica com a imunidade baixa"],
 				orgId: organization.id,
 			},
 		});
@@ -48,7 +46,7 @@ describe.only("Search pets - E2E", () => {
 				energy: "5",
 				independency: "high",
 				size: "small",
-				images: [],
+				images: ['image.jpg'],
 				requirements: ["Quanto está frio ele fica com a imunidade baixa"],
 				orgId: organization.id,
 			},
