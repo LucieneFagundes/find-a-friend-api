@@ -1,5 +1,6 @@
 import { Pet } from "@prisma/client";
 import { randomUUID } from "node:crypto";
+import { OrganizationsRepository } from "src/repositories/organizations-repository";
 import { PetsRepository } from "src/repositories/pets-repository";
 
 interface IRegisterRequest {
@@ -23,16 +24,14 @@ export class RegisterService {
 
 	async execute(data: IRegisterRequest): Promise<IRegisterResponse> {
 		const pet = await this.petsRepository.save({
-			id: randomUUID(),
-			isAvailable: true,
 			name: data.name,
 			description: data.description,
 			age: data.age,
 			size: data.size,
 			energy: data.energy,
 			independency: data.independency,
-			images: data.images ?? [],
-			requirements: data.requirements ?? [],
+			images: data.images,
+			requirements: data.requirements,
 			orgId: data.orgId,
 		});
 

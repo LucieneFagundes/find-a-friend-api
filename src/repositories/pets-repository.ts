@@ -1,4 +1,4 @@
-import { Organization, Pet } from "@prisma/client";
+import { Organization, Pet, Prisma } from "@prisma/client";
 
 export interface PetsRepository {
 	searchMany(
@@ -10,5 +10,5 @@ export interface PetsRepository {
 		size?: string
 	): Promise<Pet[]>;
 	findOne(id: string): Promise<Pet | null>;
-	save(data: Pet): Promise<Pet>;
+	save(data: Prisma.PetUncheckedCreateInput): Promise<Pet>;
 }

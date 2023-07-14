@@ -1,5 +1,4 @@
 import { hash } from "bcryptjs";
-import { randomUUID } from "crypto";
 import { app } from "src/app";
 import { prisma } from "src/lib/prisma";
 import request from "supertest";
@@ -30,7 +29,6 @@ describe.only("Search pets - E2E", () => {
 
 		await prisma.pet.create({
 			data: {
-				id: randomUUID(),
 				name: "Cid",
 				description: "Doa-se um amigãozão dócil",
 				age: "puppy",
@@ -39,13 +37,11 @@ describe.only("Search pets - E2E", () => {
 				size: "small",
 				images: [],
 				requirements: ["Quanto está frio ele fica com a imunidade baixa"],
-				isAvailable: true,
 				orgId: organization.id,
 			},
 		});
 		await prisma.pet.create({
 			data: {
-				id: randomUUID(),
 				name: "Cid",
 				description: "Doa-se um amigãozão dócil",
 				age: "puppy",
@@ -54,7 +50,6 @@ describe.only("Search pets - E2E", () => {
 				size: "small",
 				images: [],
 				requirements: ["Quanto está frio ele fica com a imunidade baixa"],
-				isAvailable: true,
 				orgId: organization.id,
 			},
 		});

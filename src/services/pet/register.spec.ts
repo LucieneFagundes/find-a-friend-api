@@ -19,9 +19,11 @@ describe("Register Pet Service", () => {
 			energy: "3",
 			independency: "2",
 			size: "big",
+			images: ["test-image.png"],
+			requirements: ["requirements 1", "requirements 2"],
 			orgId: "org-1",
 		});
 
-    expect(pet.id).toEqual(expect.any(String))
+		expect(pet.id).toEqual(expect.any(String));
 	});
 });
